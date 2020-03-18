@@ -291,13 +291,6 @@ describe("properties module", () => {
         expect(arr[4]).to.be.equal(6)
       })
 
-      describe("init", () => {
-        it("should return nothing by default", () => {
-          const prop = new MyProperty(new SomeHasProps({a: {value: "foo"}}), 'a')
-          expect(prop.init()).to.be.undefined
-        })
-      })
-
       describe("normalize", () => {
         it("should be the identity", () => {
           expect(p.Property.prototype.normalize(10)).to.be.equal(10)

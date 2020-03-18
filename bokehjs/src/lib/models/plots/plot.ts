@@ -99,6 +99,8 @@ export namespace Plot {
 
 export interface Plot extends Plot.Attrs {}
 
+//import * as t from "core/kinds"
+
 export class Plot extends LayoutDOM {
   properties: Plot.Props
   default_view: Class<PlotView, [PlotView.Options]>

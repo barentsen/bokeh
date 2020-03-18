@@ -67,7 +67,7 @@ export abstract class Property<T> {
     this._dirty = true
   }
 
-  //abstract _intrinsic_default(): T
+  // abstract _intrinsic_default(): T
 
   private _dirty: boolean = false
   get dirty(): boolean {
@@ -104,19 +104,12 @@ export abstract class Property<T> {
     this._update(attr_value)
   }
 
+  //protected abstract _update(attr_value: T): void
+
   protected _update(attr_value: T): void {
-    if (isSpec(attr_value))
-      this.spec = attr_value
-    else
-      this.spec = {value: attr_value}
-
-    //if (this.dataspec && this.spec.field != null && !isString(this.spec.field))
-    //  throw new Error(`field value for property '${attr}' is not a string`)
-
-    if (this.spec.value != null)
-      this.validate(this.spec.value)
-
-    this.init()
+    if (attr_value != null) // XXX: non-nullalble types
+      this.validate(attr_value)
+    this.spec = {value: attr_value}
   }
 
   toString(): string {
@@ -125,8 +118,6 @@ export abstract class Property<T> {
   }
 
   // ----- customizable policies
-
-  init(): void {}
 
   normalize(values: any): any {
     return values
@@ -302,11 +293,41 @@ export const VerticalAlign = Enum(enums.VerticalAlign)
 export abstract class ScalarSpec<T, S extends Scalar<T> = Scalar<T>> extends Property<T | S> {
   __value__: T
   __scalar__: S
+
+  get_value(): S {
+    // XXX: allow obj.x = null; obj.x == null
+    return this.spec.value === null ? null : this.spec as any
+  }
+
+  protected _update(attr_value: S | T): void {
+    if (isSpec(attr_value))
+      this.spec = attr_value
+    else
+      this.spec = {value: attr_value}
+
+    if (this.spec.value != null)
+      this.validate(this.spec.value)
+  }
 }
 
 export abstract class VectorSpec<T, V extends Vector<T> = Vector<T>> extends Property<T | V> {
   __value__: T
   __vector__: V
+
+  get_value(): V {
+    // XXX: allow obj.x = null; obj.x == null
+    return this.spec.value === null ? null : this.spec as any
+  }
+
+  protected _update(attr_value: V | T): void {
+    if (isSpec(attr_value))
+      this.spec = attr_value
+    else
+      this.spec = {value: attr_value}
+
+    if (this.spec.value != null)
+      this.validate(this.spec.value)
+  }
 
   array(source: ColumnarDataSource): any[] {
     let ret: any
@@ -337,7 +358,9 @@ export abstract class UnitsSpec<T, Units> extends VectorSpec<T, Dimensional<Vect
   readonly default_units: Units
   readonly valid_units: Units[]
 
-  init(): void {
+  _update(attr_value: any): void {
+    super._update(attr_value)
+
     if (this.spec.units == null)
       this.spec.units = this.default_units
 
