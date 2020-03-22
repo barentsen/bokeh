@@ -241,7 +241,7 @@ export class Line extends ContextProperties {
   readonly line_dash:        p.Array
   readonly line_dash_offset: p.Number
 
-  set_value(ctx: Context2d): void {
+  set_scalar(ctx: Context2d): void {
     ctx.strokeStyle = this.line_color.value()
     ctx.globalAlpha = this.line_alpha.value()
     ctx.lineWidth   = this.line_width.value()
@@ -300,7 +300,7 @@ export class Fill extends ContextProperties {
   readonly fill_color: p.ColorSpec
   readonly fill_alpha: p.NumberSpec
 
-  set_value(ctx: Context2d): void {
+  set_scalar(ctx: Context2d): void {
     ctx.fillStyle   = this.fill_color.value()
     ctx.globalAlpha = this.fill_alpha.value()
   }
@@ -446,7 +446,7 @@ export class Text extends ContextProperties {
     return `rgba(${r*255},${g*255},${b*255},${a})`
   }
 
-  set_value(ctx: Context2d): void {
+  set_scalar(ctx: Context2d): void {
     ctx.font         = this.font_value()
     ctx.fillStyle    = this.text_color.value()
     ctx.globalAlpha  = this.text_alpha.value()

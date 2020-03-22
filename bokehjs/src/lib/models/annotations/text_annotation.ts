@@ -70,7 +70,7 @@ export abstract class TextAnnotationView extends AnnotationView {
   abstract render(): void
 
   protected _canvas_text(ctx: Context2d, text: string, sx: number, sy: number, angle: number): void {
-    this.visuals.text.set_value(ctx)
+    this.visuals.text.set_scalar(ctx)
     const bbox_dims = this._calculate_bounding_box_dimensions(ctx, text)
 
     ctx.save()
@@ -84,17 +84,17 @@ export abstract class TextAnnotationView extends AnnotationView {
     ctx.rect(bbox_dims[0], bbox_dims[1], bbox_dims[2], bbox_dims[3])
 
     if (this.visuals.background_fill.doit) {
-      this.visuals.background_fill.set_value(ctx)
+      this.visuals.background_fill.set_scalar(ctx)
       ctx.fill()
     }
 
     if (this.visuals.border_line.doit) {
-      this.visuals.border_line.set_value(ctx)
+      this.visuals.border_line.set_scalar(ctx)
       ctx.stroke()
     }
 
     if (this.visuals.text.doit) {
-      this.visuals.text.set_value(ctx)
+      this.visuals.text.set_scalar(ctx)
       ctx.fillText(text, 0, 0)
     }
 
@@ -104,15 +104,15 @@ export abstract class TextAnnotationView extends AnnotationView {
   protected _css_text(ctx: Context2d, text: string, sx: number, sy: number, angle: number): void {
     undisplay(this.el)
 
-    this.visuals.text.set_value(ctx)
+    this.visuals.text.set_scalar(ctx)
     const bbox_dims = this._calculate_bounding_box_dimensions(ctx, text)
 
     // attempt to support vector string-style ("8 4 8") line dashing for css mode
     const ld = this.visuals.border_line.line_dash.value()
     const line_dash = ld.length < 2 ? "solid" : "dashed"
 
-    this.visuals.border_line.set_value(ctx)
-    this.visuals.background_fill.set_value(ctx)
+    this.visuals.border_line.set_scalar(ctx)
+    this.visuals.background_fill.set_scalar(ctx)
 
     this.el.style.position = 'absolute'
     this.el.style.left = `${sx + bbox_dims[0]}px`

@@ -111,7 +111,7 @@ export class LabelSetView extends TextAnnotationView {
 
   protected _get_size(): Size {
     const {ctx} = this.plot_view.canvas_view
-    this.visuals.text.set_value(ctx)
+    this.visuals.text.set_scalar(ctx)
 
     const {width, ascent} = ctx.measureText(this._text[0])
     return {width, height: ascent}

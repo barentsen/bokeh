@@ -25,7 +25,7 @@ export class LineView extends XYGlyphView {
     let drawing = false
     let last_index: number | null = null
 
-    this.visuals.line.set_value(ctx)
+    this.visuals.line.set_scalar(ctx)
     for (const i of indices) {
       if (drawing) {
         if (!isFinite(sx[i] + sy[i])) {

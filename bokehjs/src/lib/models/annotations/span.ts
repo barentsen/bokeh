@@ -92,7 +92,7 @@ export class SpanView extends AnnotationView {
       ctx.save()
 
       ctx.beginPath()
-      this.visuals.line.set_value(ctx)
+      this.visuals.line.set_scalar(ctx)
       ctx.moveTo(sleft, stop)
       if (this.model.dimension == "width") {
         ctx.lineTo(sleft + width, stop)

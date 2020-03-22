@@ -112,10 +112,10 @@ export class BoxAnnotationView extends AnnotationView {
     ctx.beginPath()
     ctx.rect(sleft, stop, sright-sleft, sbottom-stop)
 
-    this.visuals.fill.set_value(ctx)
+    this.visuals.fill.set_scalar(ctx)
     ctx.fill()
 
-    this.visuals.line.set_value(ctx)
+    this.visuals.line.set_scalar(ctx)
     ctx.stroke()
 
     ctx.restore()
